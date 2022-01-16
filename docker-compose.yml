@@ -22,13 +22,15 @@ services:
   db:
     image: postgres:13
     expose:
-      - 54332
+      - 5432
     environment:
       - POSTGRES_USER=hello_fastapi
       - POSTGRES_PASSWORD=hello_fastapi
       - POSTGRES_DB=hello_fastapi_dev
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
 
 volumes:
   postgres_data:

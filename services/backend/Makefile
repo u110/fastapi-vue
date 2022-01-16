@@ -10,6 +10,6 @@ pip:
 aerich-%:
 	docker compose exec backend aerich $(*F)
 
-migrate: aerich-migrate
+migrate: aerich-migrate  # create migration file
 
-upgrade: aerich-upgrade
+upgrade: aerich-upgrade  # apply migration file
