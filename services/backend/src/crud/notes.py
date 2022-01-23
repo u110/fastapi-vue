@@ -3,6 +3,7 @@ from tortoise.exceptions import DoesNotExist
 
 from src.database.models import Notes
 from src.schemas.notes import NoteOutSchema
+from src.schemas.token import Status
 
 
 async def get_notes():
@@ -27,9 +28,22 @@ async def update_note(note_id, note, current_user) -> NoteOutSchema:
         raise HTTPException(status_code=404, detail="Note {note_id} not found")
 
     if db_note.author.id == current_user.id:
-        deleted_count = await Notes.filter(id=note.id).delete()
+        await Notes.filter(id=note_id).update(**note.dict(exclude_unset=True))
+        return await NoteOutSchema.from_queryset_single(Notes.get(id=note_id))
+
+    raise HTTPException(status_code=403, detail="Not authorized to update")
+
+
+async def delete_note(note_id, current_user) -> Status:
+    try:
+        db_note = await NoteOutSchema.from_queryset_single(Notes.get(id=note_id))
+    except DoesNotExist:
+        raise HTTPException(status_code=404, detail="Note {}")
+
+    if db_note.author.id == current_user.id:
+        deleted_count = await Notes.filter(id=note_id).delete()
         if not deleted_count:
             raise HTTPException(status_code=404, detail="Note {note_id} not found")
-        return "Deleted note {note_id}"
+        return Status(message="Deleted note {note_id}")
 
     raise HTTPException(status_code=403, detail="Not authorized to delete")
