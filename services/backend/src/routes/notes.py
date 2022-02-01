@@ -1,4 +1,3 @@
-from http.client import responses
 from typing import List
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -25,7 +24,7 @@ async def get_notes():
 
 
 @router.get(
-    "/note/{note_id",
+    "/note/{note_id}",
     response_model=NoteOutSchema,
     dependencies=[Depends(get_current_user)],
 )
