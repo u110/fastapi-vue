@@ -52,11 +52,11 @@ class OAuth2PasswordBearerCookie(OAuth2):
 security = OAuth2PasswordBearerCookie(token_url="/login")
 
 
-def create_access_token(data: dict, expires_dalta: Optional[timedelta] = None):
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
 
-    if expires_dalta:
-        expire = datetime.utcnow() + expires_dalta
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
 
