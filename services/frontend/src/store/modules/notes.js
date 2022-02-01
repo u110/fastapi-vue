@@ -16,6 +16,10 @@ const actions = {
     await dispatch('getNotes');
   },
   async getNotes({commit}) {
+    let {data} = await axios.get('notes');
+    commit('setNotes', data);
+  },
+  async viewNote({commit}, id) {
     let {data} = await axios.get(`note/${id}`);
     commit('setNote', data);
   },
