@@ -19,7 +19,7 @@ def get_password_hash(password):
 
 
 async def get_user(username: str):
-    return await UserDatabaseSchema.from_query_single(Users.get(username=username))
+    return await UserDatabaseSchema.from_queryset_single(Users.get(username=username))
 
 
 async def validate_user(user: OAuth2PasswordRequestForm = Depends()):
