@@ -14,6 +14,9 @@ export default {
       msg: 'xx',
     };
   },
+  created() {
+    this.getMessage();
+  },
   methods: {
     getMessage() {
       axios.get('/')
@@ -24,9 +27,6 @@ export default {
           console.error(error);
         })
     }
-  },
-  created() {
-    this.getMessage();
   }
 }
 </script>

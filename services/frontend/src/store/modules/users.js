@@ -25,6 +25,7 @@ const actions = {
     let {data} = await axios.get('users/whoami');
     await commit('setUser', data);
   },
+  // eslint-disable-next-line no-empty-pattern
   async deleteUser({}, id) {
     await axios.delete(`user/${id}`);
   },
