@@ -11,6 +11,18 @@ axios.defaults.baseURL = 'http://localhost:5000/';  // the FastAPI backend
 
 Vue.config.productionTip = false;
 
+// NEW
+axios.interceptors.response.use(undefined, function (error) {
+  if (error) {
+    const originalRequest = error.config;
+    if (error.response.status == 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      store.dispatch('logOut');
+      return router.push('/login');
+    }
+  }
+});
+
 new Vue({
   router,
   store,
